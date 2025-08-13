@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="Cocktail"
             android:textColor="@color/white"
-            android:textSize="32sp"
+            android:textSize="@dimen/sp_32"
             android:textStyle="bold"
             android:fontFamily="@font/aclonica"
             app:layout_constraintBottom_toBottomOf="parent"
