@@ -8,7 +8,7 @@ import com.sun.cocktaildb.presentation.splash.SplashView
 
 class SplashScreenActivity : BaseActivity(), SplashView {
     private lateinit var binding: ActivitySplashscreenBinding
-    private lateinit var presenter: com.sun.cocktaildb.presentation.splash.SplashPresenter
+    private lateinit var presenter: SplashPresenter
 
     override fun initView() {
         binding = ActivitySplashscreenBinding.inflate(layoutInflater)
