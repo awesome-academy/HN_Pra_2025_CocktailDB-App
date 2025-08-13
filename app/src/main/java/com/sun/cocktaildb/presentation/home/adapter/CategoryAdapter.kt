@@ -7,12 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sun.cocktaildb.R
-import com.sun.cocktaildb.domain.model.Category
+import com.sun.cocktaildb.model.Category
 
 class CategoryAdapter(
-    private val onCategoryClickListener: (Category) -> Unit
+    private val onCategoryClickListener: (Category) -> Unit,
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
-
     private val categories = mutableListOf<Category>()
 
     fun updateCategories(newCategories: List<Category>) {
@@ -21,13 +20,20 @@ class CategoryAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_category, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): CategoryViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_category, parent, false)
         return CategoryViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: CategoryViewHolder,
+        position: Int,
+    ) {
         holder.bind(categories[position])
     }
 
@@ -39,12 +45,12 @@ class CategoryAdapter(
 
         fun bind(category: Category) {
             tvCategoryName.text = category.name
-            holder.binding.ivCategory.setImageResource(R.drawable.cocktail_logo)
+            ivCategory.setImageResource(R.drawable.cocktail_logo)
             // Image loading
-            
+
             itemView.setOnClickListener {
                 onCategoryClickListener(category)
             }
         }
     }
-} 
+}

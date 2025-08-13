@@ -2,40 +2,37 @@ package com.sun.cocktaildb.presentation.home
 
 import android.os.Handler
 import android.os.Looper
-import com.sun.cocktaildb.domain.model.Category
-import com.sun.cocktaildb.domain.model.Cocktail
-import com.sun.cocktaildb.domain.usecase.GetCategoriesUseCase
-import com.sun.cocktaildb.domain.usecase.GetPopularCocktailsUseCase
+import com.sun.cocktaildb.model.Category
+import com.sun.cocktaildb.model.Cocktail
 import com.sun.cocktaildb.presentation.base.BasePresenter
+import com.sun.cocktaildb.repository.CocktailRepository
 import java.util.concurrent.Executors
 
 class HomePresenter(
-    private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val getPopularCocktailsUseCase: GetPopularCocktailsUseCase
+    private val cocktailRepository: CocktailRepository,
 ) : BasePresenter<HomeView> {
-    
     private var view: HomeView? = null
     private val executor = Executors.newSingleThreadExecutor()
     private val mainHandler = Handler(Looper.getMainLooper())
-    
+
     override fun setView(view: HomeView?) {
         this.view = view
     }
-    
+
     override fun onStart() {
         loadCategories()
         loadPopularCocktails()
     }
-    
+
     override fun onStop() {
         // Cleanup if needed
     }
-    
+
     private fun loadCategories() {
         view?.showLoading()
         executor.execute {
             try {
-                val categories = getCategoriesUseCase()
+                val categories = cocktailRepository.getCategories()
                 mainHandler.post {
                     view?.showCategories(categories)
                 }
@@ -46,11 +43,11 @@ class HomePresenter(
             }
         }
     }
-    
+
     private fun loadPopularCocktails() {
         executor.execute {
             try {
-                val cocktails = getPopularCocktailsUseCase()
+                val cocktails = cocktailRepository.getPopularCocktails()
                 mainHandler.post {
                     view?.showPopularCocktails(cocktails)
                     view?.hideLoading()
@@ -63,16 +60,16 @@ class HomePresenter(
             }
         }
     }
-    
+
     fun onCategoryClicked(category: Category) {
         view?.onCategoryClicked(category)
     }
-    
+
     fun onCocktailClicked(cocktail: Cocktail) {
         view?.onCocktailClicked(cocktail)
     }
-    
+
     fun onBottomNavigationItemSelected(itemId: Int) {
         view?.onBottomNavigationItemSelected(itemId)
     }
-} 
+}

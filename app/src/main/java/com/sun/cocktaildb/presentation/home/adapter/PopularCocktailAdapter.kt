@@ -7,12 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sun.cocktaildb.R
-import com.sun.cocktaildb.domain.model.Cocktail
+import com.sun.cocktaildb.model.Cocktail
 
 class PopularCocktailAdapter(
-    private val onCocktailClickListener: (Cocktail) -> Unit
+    private val onCocktailClickListener: (Cocktail) -> Unit,
 ) : RecyclerView.Adapter<PopularCocktailAdapter.CocktailViewHolder>() {
-
     private val cocktails = mutableListOf<Cocktail>()
 
     fun updateCocktails(newCocktails: List<Cocktail>) {
@@ -21,13 +20,20 @@ class PopularCocktailAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocktailViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_popular_cocktail, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): CocktailViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_popular_cocktail, parent, false)
         return CocktailViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CocktailViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: CocktailViewHolder,
+        position: Int,
+    ) {
         holder.bind(cocktails[position])
     }
 
@@ -41,12 +47,12 @@ class PopularCocktailAdapter(
         fun bind(cocktail: Cocktail) {
             tvCocktailName.text = cocktail.name
             tvCocktailDescription.text = cocktail.description
-            holder.binding.ivCocktail.setImageResource(R.drawable.placeholder)
+            ivCocktail.setImageResource(R.drawable.placeholder)
             // Image loading
-            
+
             itemView.setOnClickListener {
                 onCocktailClickListener(cocktail)
             }
         }
     }
-} 
+}

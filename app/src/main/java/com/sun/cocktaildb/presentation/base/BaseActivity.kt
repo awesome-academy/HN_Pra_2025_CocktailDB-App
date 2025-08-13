@@ -10,4 +10,4 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     abstract fun initView()
-} 
+}

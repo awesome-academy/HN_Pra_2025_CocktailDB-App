@@ -11,12 +11,7 @@
         android:roundIcon="@drawable/cocktail_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailDB">
-        <activity
-            android:name=".screen.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
-
-        </activity>
+        
         <activity
             android:name=".screen.splashscreen.SplashScreenActivity"
             android:exported="true" >

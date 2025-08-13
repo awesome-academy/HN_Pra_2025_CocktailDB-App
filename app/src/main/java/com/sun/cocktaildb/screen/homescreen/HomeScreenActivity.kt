@@ -1,56 +1,55 @@
 package com.sun.cocktaildb.screen.homescreen
 
-import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sun.cocktaildb.R
 import com.sun.cocktaildb.databinding.ActivityHomeScreenBinding
-import com.sun.cocktaildb.di.AppModule
-import com.sun.cocktaildb.domain.model.Category
-import com.sun.cocktaildb.domain.model.Cocktail
+import com.sun.cocktaildb.model.Category
+import com.sun.cocktaildb.model.Cocktail
 import com.sun.cocktaildb.presentation.base.BaseActivity
+import com.sun.cocktaildb.presentation.home.HomePresenter
 import com.sun.cocktaildb.presentation.home.HomeView
 import com.sun.cocktaildb.presentation.home.adapter.CategoryAdapter
 import com.sun.cocktaildb.presentation.home.adapter.PopularCocktailAdapter
+import com.sun.cocktaildb.repository.impl.CocktailRepositoryImpl
 
 class HomeScreenActivity : BaseActivity(), HomeView {
-
     private lateinit var binding: ActivityHomeScreenBinding
-    private lateinit var presenter: com.sun.cocktaildb.presentation.home.HomePresenter
+    private lateinit var presenter: HomePresenter
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var popularCocktailAdapter: PopularCocktailAdapter
-
-
 
     override fun initView() {
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         setupPresenter()
         setupRecyclerViews()
         setupBottomNavigation()
     }
 
     private fun setupPresenter() {
-        presenter = AppModule.provideHomePresenter()
+        presenter = HomePresenter(CocktailRepositoryImpl())
         presenter.setView(this)
     }
 
     private fun setupRecyclerViews() {
         // Setup Categories RecyclerView
-        categoryAdapter = CategoryAdapter { category ->
-            presenter.onCategoryClicked(category)
-        }
+        categoryAdapter =
+            CategoryAdapter { category ->
+                presenter.onCategoryClicked(category)
+            }
         binding.rvCategories.apply {
             layoutManager = LinearLayoutManager(this@HomeScreenActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
         }
 
         // Setup Popular Cocktails RecyclerView
-        popularCocktailAdapter = PopularCocktailAdapter { cocktail ->
-            presenter.onCocktailClicked(cocktail)
-        }
+        popularCocktailAdapter =
+            PopularCocktailAdapter { cocktail ->
+                presenter.onCocktailClicked(cocktail)
+            }
         binding.rvPopular.apply {
             layoutManager = GridLayoutManager(this@HomeScreenActivity, 2)
             adapter = popularCocktailAdapter
@@ -124,4 +123,4 @@ class HomeScreenActivity : BaseActivity(), HomeView {
             }
         }
     }
-} 
+}
