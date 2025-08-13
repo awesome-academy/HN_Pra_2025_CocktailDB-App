@@ -46,7 +46,7 @@ class SplashScreenActivity : BaseActivity(), SplashView {
     }
 
     override fun navigateToHome() {
-        val intent = Intent(this, com.sun.cocktaildb.screen.homescreen.HomeScreenActivity::class.java)
+        val intent = Intent(this, HomeScreenActivity::class.java)
         startActivity(intent)
         finish()
     }
