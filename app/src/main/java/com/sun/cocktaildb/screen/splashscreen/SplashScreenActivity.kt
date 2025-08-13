@@ -22,13 +22,13 @@ class SplashScreenActivity : BaseActivity(), SplashView {
         presenter.setView(this)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         presenter.onStart()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         presenter.onStop()
     }
 
