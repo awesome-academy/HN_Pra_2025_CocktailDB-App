@@ -1,0 +1,23 @@
+[33m8727403[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m90946[m[33m, [m[1;31morigin/90946[m[33m)[m Update MVP 2 with fixes and blank lines
+[33mefb5502[m Update MVP 2
+[33mbedcc84[m Update for trainer
+[33m3c66ed5[m Update gradle.properties
+[33m118475d[m Update app/src/main/res/layout/item_popular_cocktail.xml
+[33m74553eb[m Update app/src/main/res/layout/item_category.xml
+[33m95fd562[m Update app/src/main/res/layout/activity_home_screen.xml
+[33m240198f[m Update app/src/main/res/layout/activity_home_screen.xml
+[33me99413b[m Update app/src/main/res/drawable/ic_search_black_24dp.xml
+[33m4d7bc0d[m Update app/src/main/res/drawable/ic_person_black_24dp.xml
+[33m74344e7[m Update app/src/main/res/drawable/ic_favorite_border_black_24dp.xml
+[33m514e13d[m Update app/src/main/res/drawable/header_background.xml
+[33mf74bcbb[m Update app/src/main/res/drawable/category_background.xml
+[33md6dc46c[m Update app/src/main/res/color/bottom_nav_color.xml
+[33m5f11dce[m Update app/src/main/java/com/sun/cocktaildb/screen/splashscreen/SplashScreenActivity.kt
+[33m791c14e[m Update app/src/main/java/com/sun/cocktaildb/screen/splashscreen/SplashScreenActivity.kt
+[33m53e3108[m Update app/src/main/java/com/sun/cocktaildb/screen/splashscreen/SplashScreenActivity.kt
+[33m010656c[m Update MVP simple and blankline
+[33m5ffa8cf[m Feat/task 90946: Create UI for Home Screen
+[33mc6b9975[m[33m ([m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdevelop[m[33m)[m Feat/ task 90734 splashscreen (#3)
+[33mcbeb217[m Add MVP Base, extension function need for future usage. (#2)
+[33m396d141[m Feat/task 90505 Init project (#1)
+[33m0a1dc16[m Initial commit
