@@ -6,6 +6,8 @@ import com.sun.cocktaildb.repository.CocktailRepository
 
 class CocktailRepositoryImpl : CocktailRepository {
     override fun getCategories(): List<Category> {
+        // TODO replace by call API later
+
         return listOf(
             Category("1", "Sour", "https://example.com/img/sour.png"),
             Category("2", "Argi", "https://example.com/img/argi.png"),
@@ -17,6 +19,8 @@ class CocktailRepositoryImpl : CocktailRepository {
     }
 
     override fun getPopularCocktails(): List<Cocktail> {
+        // TODO replace by call API later
+
         return listOf(
             Cocktail("1", "Long Island", "Here is the description for this cocktail.", "https://example.com/img/long_island.png"),
             Cocktail("2", "Margarita", "Classic margarita cocktail", "https://example.com/img/margarita.png"),
