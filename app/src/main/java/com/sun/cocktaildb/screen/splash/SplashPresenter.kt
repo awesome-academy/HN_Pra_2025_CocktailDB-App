@@ -1,8 +1,8 @@
-package com.sun.cocktaildb.presentation.splash
+package com.sun.cocktaildb.screen.splash
 
 import android.os.Handler
 import android.os.Looper
-import com.sun.cocktaildb.presentation.base.BasePresenter
+import com.sun.cocktaildb.utils.base.BasePresenter
 
 class SplashPresenter : BasePresenter<SplashView> {
     private var view: SplashView? = null
@@ -17,19 +17,16 @@ class SplashPresenter : BasePresenter<SplashView> {
     }
 
     override fun onStop() {
-        // Cleanup if needed
         handler.removeCallbacksAndMessages(null)
     }
 
     private fun startSplashTimer() {
         handler.postDelayed({
             checkUserStatus()
-        }, 2000) // 2 seconds delay
+        }, 2000)
     }
 
     private fun checkUserStatus() {
-        // Check if user is logged in
-        // For now, always navigate to home
         view?.navigateToHome()
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".screen.homescreen.HomeScreenActivity">
+    tools:context=".screen.home.HomeScreenActivity">
 
     <!-- Header Section with Orange Background and Yellow Wave -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,4 +101,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout> 
+</androidx.constraintlayout.widget.ConstraintLayout>

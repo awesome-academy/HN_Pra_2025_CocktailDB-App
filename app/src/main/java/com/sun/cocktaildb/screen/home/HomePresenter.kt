@@ -1,11 +1,11 @@
-package com.sun.cocktaildb.presentation.home
+package com.sun.cocktaildb.screen.home
 
 import android.os.Handler
 import android.os.Looper
-import com.sun.cocktaildb.model.Category
-import com.sun.cocktaildb.model.Cocktail
-import com.sun.cocktaildb.presentation.base.BasePresenter
-import com.sun.cocktaildb.repository.CocktailRepository
+import com.sun.cocktaildb.data.model.Category
+import com.sun.cocktaildb.data.model.Cocktail
+import com.sun.cocktaildb.data.repository.CocktailRepository
+import com.sun.cocktaildb.utils.base.BasePresenter
 import java.util.concurrent.Executors
 
 class HomePresenter(

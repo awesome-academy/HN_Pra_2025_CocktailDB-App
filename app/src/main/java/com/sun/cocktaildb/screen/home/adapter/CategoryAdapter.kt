@@ -1,4 +1,4 @@
-package com.sun.cocktaildb.presentation.home.adapter
+package com.sun.cocktaildb.screen.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sun.cocktaildb.R
-import com.sun.cocktaildb.model.Category
+import com.sun.cocktaildb.data.model.Category
 
 class CategoryAdapter(
     private val onCategoryClickListener: (Category) -> Unit,
@@ -46,7 +46,6 @@ class CategoryAdapter(
         fun bind(category: Category) {
             tvCategoryName.text = category.name
             ivCategory.setImageResource(R.drawable.cocktail_logo)
-            // Image loading
 
             itemView.setOnClickListener {
                 onCategoryClickListener(category)

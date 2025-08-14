@@ -1,4 +1,4 @@
-package com.sun.cocktaildb.presentation.home.adapter
+package com.sun.cocktaildb.screen.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sun.cocktaildb.R
-import com.sun.cocktaildb.model.Cocktail
+import com.sun.cocktaildb.data.model.Cocktail
 
 class PopularCocktailAdapter(
     private val onCocktailClickListener: (Cocktail) -> Unit,
@@ -48,7 +48,6 @@ class PopularCocktailAdapter(
             tvCocktailName.text = cocktail.name
             tvCocktailDescription.text = cocktail.description
             ivCocktail.setImageResource(R.drawable.placeholder)
-            // Image loading
 
             itemView.setOnClickListener {
                 onCocktailClickListener(cocktail)

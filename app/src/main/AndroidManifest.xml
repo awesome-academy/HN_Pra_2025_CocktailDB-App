@@ -13,7 +13,7 @@
         android:theme="@style/Theme.CocktailDB">
         
         <activity
-            android:name=".screen.splashscreen.SplashScreenActivity"
+            android:name=".screen.splash.SplashScreenActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".screen.homescreen.HomeScreenActivity"
+            android:name=".screen.home.HomeScreenActivity"
             android:exported="false" />
 
         <meta-data

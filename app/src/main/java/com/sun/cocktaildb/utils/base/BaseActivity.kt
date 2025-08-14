@@ -1,4 +1,4 @@
-package com.sun.cocktaildb.presentation.base
+package com.sun.cocktaildb.utils.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

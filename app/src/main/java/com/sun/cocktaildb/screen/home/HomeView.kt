@@ -1,8 +1,8 @@
-package com.sun.cocktaildb.presentation.home
+package com.sun.cocktaildb.screen.home
 
-import com.sun.cocktaildb.model.Category
-import com.sun.cocktaildb.model.Cocktail
-import com.sun.cocktaildb.presentation.base.BaseView
+import com.sun.cocktaildb.data.model.Category
+import com.sun.cocktaildb.data.model.Cocktail
+import com.sun.cocktaildb.utils.base.BaseView
 
 interface HomeView : BaseView {
     fun showCategories(categories: List<Category>)

@@ -1,18 +1,16 @@
-package com.sun.cocktaildb.screen.homescreen
+package com.sun.cocktaildb.screen.home
 
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sun.cocktaildb.R
+import com.sun.cocktaildb.data.model.Category
+import com.sun.cocktaildb.data.model.Cocktail
+import com.sun.cocktaildb.data.repository.impl.CocktailRepositoryImpl
 import com.sun.cocktaildb.databinding.ActivityHomeScreenBinding
-import com.sun.cocktaildb.model.Category
-import com.sun.cocktaildb.model.Cocktail
-import com.sun.cocktaildb.presentation.base.BaseActivity
-import com.sun.cocktaildb.presentation.home.HomePresenter
-import com.sun.cocktaildb.presentation.home.HomeView
-import com.sun.cocktaildb.presentation.home.adapter.CategoryAdapter
-import com.sun.cocktaildb.presentation.home.adapter.PopularCocktailAdapter
-import com.sun.cocktaildb.repository.impl.CocktailRepositoryImpl
+import com.sun.cocktaildb.screen.home.adapter.CategoryAdapter
+import com.sun.cocktaildb.screen.home.adapter.PopularCocktailAdapter
+import com.sun.cocktaildb.utils.base.BaseActivity
 
 class HomeScreenActivity : BaseActivity(), HomeView {
     private lateinit var binding: ActivityHomeScreenBinding
@@ -41,7 +39,8 @@ class HomeScreenActivity : BaseActivity(), HomeView {
                 presenter.onCategoryClicked(category)
             }
         binding.rvCategories.apply {
-            layoutManager = LinearLayoutManager(this@HomeScreenActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@HomeScreenActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
         }
 

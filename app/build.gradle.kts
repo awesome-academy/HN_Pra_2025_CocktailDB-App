@@ -58,4 +58,5 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(kotlin("test"))
 }

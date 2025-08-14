@@ -1,11 +1,9 @@
-package com.sun.cocktaildb.screen.splashscreen
+package com.sun.cocktaildb.screen.splash
 
 import android.content.Intent
 import com.sun.cocktaildb.databinding.ActivitySplashscreenBinding
-import com.sun.cocktaildb.presentation.base.BaseActivity
-import com.sun.cocktaildb.presentation.splash.SplashPresenter
-import com.sun.cocktaildb.presentation.splash.SplashView
-import com.sun.cocktaildb.screen.homescreen.HomeScreenActivity
+import com.sun.cocktaildb.screen.home.HomeScreenActivity
+import com.sun.cocktaildb.utils.base.BaseActivity
 
 class SplashScreenActivity : BaseActivity(), SplashView {
     private lateinit var binding: ActivitySplashscreenBinding
