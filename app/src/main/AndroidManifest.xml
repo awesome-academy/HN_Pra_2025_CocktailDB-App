@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screen.authenticate.LoginActivity"
+            android:name=".screen.authenticate.login.LoginActivity"
             android:exported="true" />
 
         <meta-data
