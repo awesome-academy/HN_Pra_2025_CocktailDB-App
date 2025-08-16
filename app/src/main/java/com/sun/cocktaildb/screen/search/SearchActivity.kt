@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sun.cocktaildb.data.model.Cocktail
 import com.sun.cocktaildb.data.repository.impl.CocktailRepositoryImpl
 import com.sun.cocktaildb.databinding.ActivitySearchBinding
@@ -22,6 +23,8 @@ class SearchActivity : AppCompatActivity(), SearchView {
     private lateinit var presenter: SearchPresenter
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var historyAdapter: HistoryAdapter
+    private var isBottomNavigationSetup = false
+    private var isFinishingActivity = false
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -34,10 +37,14 @@ class SearchActivity : AppCompatActivity(), SearchView {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Reset setup flags for new activity instance
+        isBottomNavigationSetup = false
+        isFinishingActivity = false
+
         setupPresenter()
         setupRecyclerView()
         setupHistoryRecyclerView()
-        setupBottomNavigation()
+        // Remove setupBottomNavigation from onCreate to avoid timing issues
         setupSearchField()
         setupClickListeners()
     }
@@ -76,12 +83,37 @@ class SearchActivity : AppCompatActivity(), SearchView {
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+        // Prevent multiple setup attempts
+        if (isBottomNavigationSetup) {
+            return
+        }
+        
+        // Add null safety check and ensure view is properly initialized
+        binding.bottomNavigation?.let { bottomNav ->
+            // Simple approach: just wait a bit and then setup
+            bottomNav.post {
+                if (!isFinishing && !isDestroyed && !isBottomNavigationSetup) {
+                    setupBottomNavigationInternal(bottomNav)
+                    isBottomNavigationSetup = true
+                }
+            }
+        }
+    }
+    
+    private fun setupBottomNavigationInternal(bottomNav: BottomNavigationView) {
+        // Check if activity is finishing or destroyed
+        if (isFinishing || isDestroyed) {
+            return
+        }
+        
+        bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
-                    // Reset bottom navigation to home before finishing
-                    binding.bottomNavigation.selectedItemId = R.id.navigation_home
-                    finish()
+                    // Simple navigation to home
+                    if (!isFinishingActivity && !isFinishing && !isDestroyed) {
+                        isFinishingActivity = true
+                        finish()
+                    }
                     true
                 }
                 R.id.navigation_favorites -> {
@@ -100,8 +132,13 @@ class SearchActivity : AppCompatActivity(), SearchView {
             }
         }
         
-        // Set search as selected
-        binding.bottomNavigation.selectedItemId = R.id.navigation_search
+        // Set search as selected - simple approach
+        try {
+            bottomNav.selectedItemId = R.id.navigation_search
+        } catch (e: Exception) {
+            // Log the error but don't crash
+            e.printStackTrace()
+        }
     }
 
     private fun setupSearchField() {
@@ -118,12 +155,29 @@ class SearchActivity : AppCompatActivity(), SearchView {
 
     override fun onResume() {
         super.onResume()
+        // Setup bottom navigation here to ensure view is fully initialized
+        setupBottomNavigation()
         presenter.onStart()
     }
 
     override fun onPause() {
         super.onPause()
         presenter.onStop()
+    }
+    
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            // Try to setup bottom navigation again when window gains focus
+            setupBottomNavigation()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Reset setup flags
+        isBottomNavigationSetup = false
+        isFinishingActivity = false
     }
 
     // SearchView implementations
