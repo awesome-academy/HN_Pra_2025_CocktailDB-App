@@ -4,18 +4,32 @@ import android.os.Handler
 import android.os.Looper
 import com.sun.cocktaildb.data.model.Cocktail
 import com.sun.cocktaildb.data.repository.CocktailRepository
+import com.sun.cocktaildb.utils.base.BasePresenter
 import java.util.concurrent.Executors
 
 class SearchPresenter(
     private val cocktailRepository: CocktailRepository
-) : com.sun.cocktaildb.utils.base.BasePresenter<SearchView> {
+) : BasePresenter<SearchView> {
     
     private var view: SearchView? = null
     private val executor = Executors.newSingleThreadExecutor()
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var searchJob: Runnable? = null
     
-    // History management
+    // Search state tracking
+    private var currentSearchType = SearchType.NAME
+    private var currentQuery = ""
+    
+    // Filter state
+    private var selectedAlcoholicFilter: String? = null
+    private var selectedIngredientFilter: String? = null
+    
+    // Cache for performance
+    private var cachedResults = mutableMapOf<String, List<Cocktail>>()
+    private var lastSearchQuery = ""
+    private var lastSearchType = SearchType.NAME
+    private var lastFilters = ""
+    
+    // Search history
     private val searchHistory = mutableListOf<String>()
     private val maxHistorySize = 10
 
@@ -24,33 +38,91 @@ class SearchPresenter(
     }
 
     override fun onStart() {
-        // Load and show history
+        // Show search history when starting
         view?.showHistory(searchHistory)
     }
 
     override fun onStop() {
-        // Cancel any ongoing search
-        searchJob?.let { mainHandler.removeCallbacks(it) }
+        // Clean up resources
     }
 
-    fun searchCocktails(query: String) {
-        if (query.trim().isEmpty()) {
+    // Search cocktails with query and search type
+    fun searchCocktails(query: String, searchType: SearchType) {
+        currentSearchType = searchType
+        currentQuery = query.trim()
+
+        val hasQuery = query.trim().isNotEmpty()
+        val hasFilters = selectedAlcoholicFilter != null || selectedIngredientFilter != null
+        
+        if (!hasQuery && !hasFilters) {
             view?.clearSearchResults()
-            view?.showHistory(searchHistory) // Show history when search is empty
+            view?.showHistory(searchHistory)
             return
         }
 
-        // Add to history first
-        addToHistory(query.trim())
+        // Check cache first
+        val cacheKey = generateCacheKey(query.trim(), searchType, selectedAlcoholicFilter, selectedIngredientFilter)
+        if (cachedResults.containsKey(cacheKey)) {
+            val cachedResult = cachedResults[cacheKey]
+            if (cachedResult != null) {
+                view?.hideHistory()
+                view?.hideLoading()
+                if (cachedResult.isNotEmpty()) {
+                    view?.showSearchResults(cachedResult)
+                } else {
+                    view?.showNoResults()
+                }
+                return
+            }
+        }
 
-        // Hide history immediately when search starts
+        // Add to search history for meaningful searches
+        if (query.trim().length >= 2) {
+            addToHistory(query.trim())
+        }
+
         view?.hideHistory()
         view?.showLoading()
-        
-        // Create new search job
-        searchJob = Runnable {
+
+        executor.execute {
             try {
-                val results = cocktailRepository.searchCocktails(query.trim())
+                var results = when (searchType) {
+                    SearchType.NAME -> {
+                        if (hasQuery) {
+                            val nameResults = cocktailRepository.searchCocktailsByName(query.trim())
+                            if (nameResults.isEmpty() && query.trim().length == 1) {
+                                cocktailRepository.searchCocktailsByFirstLetter(query.trim())
+                            } else {
+                                nameResults
+                            }
+                        } else {
+                            cocktailRepository.searchCocktailsByFirstLetter("M")
+                        }
+                    }
+                    SearchType.INGREDIENT -> {
+                        if (hasQuery) {
+                            cocktailRepository.searchCocktailsByIngredient(query.trim())
+                        } else if (selectedIngredientFilter != null) {
+                            cocktailRepository.searchCocktailsByIngredient(selectedIngredientFilter!!)
+                        } else {
+                            cocktailRepository.searchCocktailsByFirstLetter("M")
+                        }
+                    }
+                    SearchType.FIRST_LETTER -> {
+                        if (hasQuery) {
+                            cocktailRepository.searchCocktailsByFirstLetter(query.trim())
+                        } else {
+                            cocktailRepository.searchCocktailsByFirstLetter("M")
+                        }
+                    }
+                }
+                
+                // Apply filters if selected
+                results = applyFilters(results)
+                
+                // Cache the results
+                cachedResults[cacheKey] = results
+                
                 mainHandler.post {
                     view?.hideLoading()
                     if (results.isNotEmpty()) {
@@ -62,37 +134,101 @@ class SearchPresenter(
             } catch (e: Exception) {
                 mainHandler.post {
                     view?.hideLoading()
-                    view?.showError(e.message ?: "Search failed")
+                    view?.showError("Search failed: ${e.message}")
                 }
             }
         }
-
-        // Execute search immediately
-        executor.execute(searchJob!!)
     }
-
-    fun onCocktailClicked(cocktail: Cocktail) {
-        view?.onCocktailClicked(cocktail)
+    
+    // Set search type
+    fun setSearchType(searchType: SearchType) {
+        currentSearchType = searchType
     }
-
-    fun removeFromHistory(historyItem: String) {
-        searchHistory.remove(historyItem)
-        // Only show history if we're in history mode (not showing search results)
+    
+    // Get current search type
+    fun getCurrentSearchType(): SearchType {
+        return currentSearchType
+    }
+    
+    // Clear search results and show history
+    fun clearSearchResults() {
+        currentQuery = ""
+        selectedAlcoholicFilter = null
+        selectedIngredientFilter = null
+        view?.clearSearchResults()
         view?.showHistory(searchHistory)
     }
     
+    // Set alcoholic filter
+    fun setAlcoholicFilter(filter: String?) {
+        selectedAlcoholicFilter = filter
+        selectedIngredientFilter = null
+        searchCocktails(currentQuery, currentSearchType)
+    }
+    
+    // Set ingredient filter
+    fun setIngredientFilter(filter: String?) {
+        selectedIngredientFilter = filter
+        selectedAlcoholicFilter = null
+        searchCocktails(currentQuery, currentSearchType)
+    }
+    
+    // Add query to search history
     private fun addToHistory(query: String) {
-        // Remove if already exists (to move to top)
         searchHistory.remove(query)
-        
-        // Add to beginning of list
         searchHistory.add(0, query)
-        
-        // Keep only maxHistorySize items
         if (searchHistory.size > maxHistorySize) {
             searchHistory.removeAt(searchHistory.size - 1)
         }
-        
-        // Don't update view here - let the calling method decide when to show history
     }
+    
+    // Remove query from search history
+    fun removeFromHistory(query: String) {
+        searchHistory.remove(query)
+        view?.showHistory(searchHistory)
+    }
+    
+    // Get search history
+    fun getSearchHistory(): List<String> {
+        return searchHistory.toList()
+    }
+    
+    // Generate cache key for results
+    private fun generateCacheKey(query: String, searchType: SearchType, alcoholicFilter: String?, ingredientFilter: String?): String {
+        return "${query}_${searchType}_${alcoholicFilter ?: "null"}_${ingredientFilter ?: "null"}"
+    }
+    
+    // Clear cache when needed
+    fun clearCache() {
+        cachedResults.clear()
+    }
+    
+    // Apply filters to cocktail list
+    private fun applyFilters(cocktails: List<Cocktail>): List<Cocktail> {
+        var filteredCocktails = cocktails
+        
+        // Apply alcoholic filter
+        selectedAlcoholicFilter?.let { alcoholicFilter ->
+            filteredCocktails = filteredCocktails.filter { cocktail ->
+                cocktail.description.contains(alcoholicFilter, ignoreCase = true)
+            }
+        }
+        
+        // Apply ingredient filter
+        selectedIngredientFilter?.let { ingredientFilter ->
+            filteredCocktails = filteredCocktails.filter { cocktail ->
+                cocktail.ingredients.any { ingredient ->
+                    ingredient.contains(ingredientFilter, ignoreCase = true)
+                }
+            }
+        }
+        
+        return filteredCocktails
+    }
+}
+
+enum class SearchType {
+    NAME,
+    INGREDIENT,
+    FIRST_LETTER
 }
