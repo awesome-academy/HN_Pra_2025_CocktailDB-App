@@ -1,5 +1,7 @@
 package com.sun.cocktaildb.data.repository.impl
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.sun.cocktaildb.data.model.Category
 import com.sun.cocktaildb.data.model.Cocktail
 import com.sun.cocktaildb.data.repository.CocktailRepository
@@ -428,20 +430,20 @@ class CocktailRepositoryImpl : CocktailRepository {
     override fun searchCocktailsByFirstLetter(letter: String): List<Cocktail> {
         try {
             val url = baseUrl + "search.php?f=" + letter.uppercase().first()
-            println("DEBUG: Searching cocktails with URL: $url")
+            Log.d(TAG, "Searching cocktails with URL: $url")
             
             val json = fetchJson(url)
-            println("DEBUG: Received JSON: ${json.take(200)}...")
+            Log.d(TAG, "Received JSON: ${json.take(200)}...")
             
             val jsonObject = JSONObject(json)
             val drinksArray = jsonObject.optJSONArray("drinks")
-            
+
             if (drinksArray == null) {
-                println("DEBUG: No drinks array found in response")
+                Log.d(TAG, "No drinks array found in response")
                 return emptyList()
             }
-            
-            println("DEBUG: Found ${drinksArray.length()} cocktails")
+
+            Log.d(TAG, "Found ${drinksArray.length()} cocktails")
             val result = mutableListOf<Cocktail>()
             
             // Limit to first 20 cocktails to avoid too many API calls

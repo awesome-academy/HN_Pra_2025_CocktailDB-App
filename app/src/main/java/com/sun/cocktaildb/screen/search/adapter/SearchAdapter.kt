@@ -52,20 +52,7 @@ class SearchAdapter(
                 tvCocktailName.text = cocktail.name
                 
                 // Display ingredients in the format shown in the image
-                val ingredientsText = if (cocktail.ingredients.isNotEmpty() && 
-                    cocktail.ingredients.first() != "Ingredients not available") {
-                    // Show first ingredient with its measure if available
-                    val firstIngredient = cocktail.ingredients.first()
-                    if (firstIngredient.contains(" ")) {
-                        // If ingredient already has measure, use as is
-                        firstIngredient
-                    } else {
-                        // Add default measure
-                        "1/2 oz $firstIngredient"
-                    }
-                } else {
-                    "1/2 oz Ingredients not available"
-                }
+                val ingredientsText = getIngredientsText(cocktail)
                 tvCocktailDescription.text = ingredientsText
                 
                 // Load image using ImageLoader utility
@@ -75,6 +62,24 @@ class SearchAdapter(
                 } else {
                     ivCocktailImage.setImageResource(R.drawable.placeholder)
                 }
+            }
+        }
+        
+        // Extract complex logic into separate method for better readability and testability
+        private fun getIngredientsText(cocktail: Cocktail): String {
+            return if (cocktail.ingredients.isNotEmpty() && 
+                cocktail.ingredients.first() != "Ingredients not available") {
+                // Show first ingredient with its measure if available
+                val firstIngredient = cocktail.ingredients.first()
+                if (firstIngredient.contains(" ")) {
+                    // If ingredient already has measure, use as is
+                    firstIngredient
+                } else {
+                    // Add default measure
+                    "1/2 oz $firstIngredient"
+                }
+            } else {
+                "1/2 oz Ingredients not available"
             }
         }
     }

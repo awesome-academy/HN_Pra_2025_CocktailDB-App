@@ -4,7 +4,7 @@
         <domain includeSubdomains="true">thecocktaildb.com</domain>
         <domain includeSubdomains="true">www.thecocktaildb.com</domain>
     </domain-config>
-    <base-config cleartextTrafficPermitted="true">
+    <base-config>
         <trust-anchors>
             <certificates src="system"/>
         </trust-anchors>
