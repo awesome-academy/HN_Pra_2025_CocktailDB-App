@@ -13,7 +13,7 @@
         android:roundIcon="@drawable/cocktail_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailDB">
-        
+
         <activity
             android:name=".screen.splash.SplashScreenActivity"
             android:exported="true" >
