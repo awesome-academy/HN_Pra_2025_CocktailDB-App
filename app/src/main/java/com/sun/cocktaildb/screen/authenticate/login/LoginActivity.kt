@@ -5,66 +5,66 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-
 import android.widget.Toast
 import com.sun.cocktaildb.R
-import com.sun.cocktaildb.screen.MainActivity
+import com.sun.cocktaildb.databinding.ActivityLognBinding
+import com.sun.cocktaildb.screen.authenticate.register.RegisterActivity
+import com.sun.cocktaildb.screen.home.HomeScreenActivity
 import com.sun.cocktaildb.utils.base.BaseActivity
 
-class LoginActivity : BaseActivity(), LoginContract.View {
-    
+class LoginActivity :
+    BaseActivity(),
+    LoginContract.View {
     private lateinit var presenter: LoginPresenter
-    private lateinit var emailEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var loginButton: Button
 
-    
-    override fun getLayoutResourceId(): Int = R.layout.activity_logn
+    private var binding: ActivityLognBinding? = null
 
     override fun initView() {
         presenter = LoginPresenter()
         presenter.setView(this)
-        
+        binding = ActivityLognBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
         initializeViews()
         setupClickListeners()
     }
-    
+
     private fun initializeViews() {
-        emailEditText = findViewById(R.id.et_username)
-        passwordEditText = findViewById(R.id.et_password)
-        loginButton = findViewById(R.id.btn_login)
-        // Note: ProgressBar is not in the current layout, we'll handle loading state differently
     }
-    
+
     private fun setupClickListeners() {
-        loginButton.setOnClickListener {
+        binding?.btnLogin?.setOnClickListener {
             presenter.login()
         }
+
+        binding?.tvSignup?.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
-    
+
     override fun onStart() {
         super.onStart()
         presenter.onStart()
     }
-    
+
     override fun onStop() {
         super.onStop()
         presenter.onStop()
     }
-    
+
     override fun onDestroy() {
         super.onDestroy()
         presenter.setView(null)
     }
 
     override fun showLoading() {
-        loginButton.isEnabled = false
-        loginButton.text = "Logging in..."
+        binding?.btnLogin?.isEnabled = false
+        binding?.btnLogin?.text = "Logging in..."
     }
 
     override fun hideLoading() {
-        loginButton.isEnabled = true
-        loginButton.text = getString(R.string.login)
+        binding?.btnLogin?.isEnabled = true
+        binding?.btnLogin?.text = getString(R.string.login)
     }
 
     override fun showError(message: String) {
@@ -76,21 +76,22 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     }
 
     override fun navigateToMain() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeScreenActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    override fun getEmail(): String {
-        return emailEditText.text.toString().trim()
-    }
+    override fun getEmail(): String =
+        binding
+            ?.etUsername
+            ?.text
+            .toString()
+            .trim()
 
-    override fun getPassword(): String {
-        return passwordEditText.text.toString()
-    }
+    override fun getPassword(): String = binding?.etPassword?.text.toString()
 
     override fun clearInputs() {
-        emailEditText.text.clear()
-        passwordEditText.text.clear()
+        binding?.etUsername?.text?.clear()
+        binding?.etPassword?.text?.clear()
     }
 }
