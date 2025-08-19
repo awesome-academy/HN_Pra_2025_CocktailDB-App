@@ -1,12 +1,11 @@
 package com.sun.cocktaildb.screen.authenticate.login
 
 import com.sun.cocktaildb.data.repository.AuthRepository
-import com.sun.cocktaildb.data.repository.FirebaseAuthImplement
+import com.sun.cocktaildb.data.repository.impl.FirebaseAuthImplement
 
 class LoginPresenter(
-    private val authRepository: AuthRepository = FirebaseAuthImplement()
+    private val authRepository: AuthRepository = FirebaseAuthImplement(),
 ) : LoginContract.Presenter {
-
     private var view: LoginContract.View? = null
 
     override fun setView(view: LoginContract.View?) {
@@ -27,10 +26,10 @@ class LoginPresenter(
         }
 
         view?.showLoading()
-        
+
         val email = view?.getEmail() ?: ""
         val password = view?.getPassword() ?: ""
-        
+
         authRepository.login(email, password) { result ->
             result.fold(
                 onSuccess = {
@@ -42,7 +41,7 @@ class LoginPresenter(
                 onFailure = { exception ->
                     view?.hideLoading()
                     view?.showError(exception.message ?: "Login failed")
-                }
+                },
             )
         }
     }
@@ -50,17 +49,16 @@ class LoginPresenter(
     override fun validateInputs(): Boolean {
         val email = view?.getEmail() ?: ""
         val password = view?.getPassword() ?: ""
-        
+
         if (email.isEmpty()) {
             view?.showError("Email is required")
             return false
         }
-        
+
         if (password.isEmpty()) {
             view?.showError("Password is required")
             return false
         }
-        
         return true
     }
-} 
+}
