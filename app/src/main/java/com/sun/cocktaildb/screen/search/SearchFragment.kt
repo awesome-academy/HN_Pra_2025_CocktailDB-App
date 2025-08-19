@@ -12,6 +12,7 @@ import com.sun.cocktaildb.utils.base.BaseFragment
 import com.sun.cocktaildb.databinding.FragmentSearchBinding
 import com.sun.cocktaildb.screen.search.adapter.SearchAdapter
 import com.sun.cocktaildb.screen.search.adapter.HistoryAdapter
+import com.sun.cocktaildb.screen.cocktaildetail.CocktailActivity
 
 class SearchFragment : BaseFragment() {
     
@@ -42,7 +43,8 @@ class SearchFragment : BaseFragment() {
     
     private fun setupSearchAdapter() {
         searchAdapter = SearchAdapter { cocktail ->
-            Toast.makeText(context, "Clicked: ${cocktail.name}", Toast.LENGTH_SHORT).show()
+            val intent = CocktailActivity.newIntent(requireContext(), cocktail.id)
+            startActivity(intent)
         }
         
         binding.rvSearchResults.apply {

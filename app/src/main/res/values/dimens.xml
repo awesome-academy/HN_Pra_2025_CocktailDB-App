@@ -51,4 +51,7 @@
     <!-- Button dimensions -->
     <dimen name="button_padding">12dp</dimen>
     <dimen name="button_size">48dp</dimen>
+    
+    <!-- Tag dimensions -->
+    <dimen name="tag_margin">8dp</dimen>
 </resources>
