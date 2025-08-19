@@ -13,4 +13,6 @@
     <string name="navigate_to_detail_screen">Navigate to detail screen for: %1$s</string>
     <string name="favorite_icon">Icon yêu thích</string>
     <string name="no_result_found">No result found</string>
+    <string name="cocktaildb">CocktailDB</string>
+    <string name="sign_up">Sign up</string>
 </resources>
