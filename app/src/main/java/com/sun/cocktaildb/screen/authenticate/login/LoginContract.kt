@@ -17,7 +17,5 @@ interface LoginContract {
 
     interface Presenter : com.sun.cocktaildb.utils.base.BasePresenter<View> {
         fun login()
-
-        fun validateInputs(): Boolean
     }
-} 
+}

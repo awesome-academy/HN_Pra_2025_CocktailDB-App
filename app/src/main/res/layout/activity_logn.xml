@@ -8,20 +8,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:padding="@dimen/dp_24">
 
         <!-- Profile Circle -->
         <androidx.cardview.widget.CardView
             android:id="@+id/profile_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="100dp"
+            app:cardCornerRadius="@dimen/dp_100"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <View
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="@dimen/dp_120"
                 android:background="@drawable/cocktail_logo" />
         </androidx.cardview.widget.CardView>
 
@@ -30,11 +30,11 @@
             android:id="@+id/login_card"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="16dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="8dp"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_16"
+            app:cardCornerRadius="@dimen/dp_24"
+            app:cardElevation="@dimen/dp_8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_circle">
@@ -43,17 +43,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="32dp">
+                android:padding="@dimen/dp_32">
 
                 <!-- LOGIN Title -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="8dp"
-                    android:text="LOGIN"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:text="@string/login"
                     android:textColor="#000000"
-                    android:textSize="28sp"
+                    android:textSize="@dimen/sp_24"
                     android:textStyle="bold" />
 
                 <!-- Subtitle -->
@@ -61,58 +61,58 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="40dp"
-                    android:text="Sign in to your cocktail account"
+                    android:layout_marginBottom="@dimen/dp_40"
+                    android:text="@string/sign_in_to_your_cocktail_account"
                     android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/sp_16" />
 
                 <!-- User name Label -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Email"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:text="@string/email"
                     android:textColor="#333333"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_14"
                     android:textStyle="bold" />
 
                 <!-- User name Input -->
                 <EditText
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_height="@dimen/button_size"
+                    android:layout_marginBottom="@dimen/dp_24"
                     android:background="@drawable/input_background"
-                    android:hint="Enter your email here"
+                    android:hint="@string/enter_your_email_here"
                     android:inputType="text"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
+                    android:paddingStart="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_16"
                     android:textColorHint="#999999"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/sp_14" />
 
                 <!-- Password Label -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="Password"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:text="@string/password"
                     android:textColor="#333333"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_14"
                     android:textStyle="bold" />
 
                 <!-- Password Input -->
                 <EditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginBottom="40dp"
+                    android:layout_height="@dimen/button_size"
+                    android:layout_marginBottom="@dimen/dp_40"
                     android:background="@drawable/input_background"
-                    android:hint="Enter your password here"
+                    android:hint="@string/enter_your_password_here"
                     android:inputType="textPassword"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
+                    android:paddingStart="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_16"
                     android:textColorHint="#999999"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/sp_14" />
 
                 <!-- Login Button -->
                 <Button
@@ -120,13 +120,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:paddingVertical="8dp"
-                    android:layout_marginBottom="24dp"
+                    android:paddingVertical="@dimen/dp_8"
+                    android:layout_marginBottom="@dimen/dp_24"
                     android:background="@drawable/button_orange"
                     android:text="@string/login"
                     android:backgroundTint="@color/colorPrimary"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
 
                 <!-- Sign up Text -->
@@ -139,36 +139,23 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Don't have an account? "
+                        android:text="@string/don_t_have_an_account"
                         android:textColor="#666666"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/sp_14" />
 
                     <TextView
                         android:id="@+id/tv_signup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign up"
+                        android:text="@string/sign_up"
                         android:textColor="#FF6B35"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/sp_14"
                         android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <!-- Contact Information -->
-        <TextView
-            android:id="@+id/tv_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Contact: abcxyz@gmail.com"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

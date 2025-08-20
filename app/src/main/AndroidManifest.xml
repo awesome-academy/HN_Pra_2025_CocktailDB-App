@@ -10,16 +10,17 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/cocktail_logo"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/cocktail_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailDB"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true">
-
+        
+        android:theme="@style/Theme.CocktailDB">
 
         <activity
             android:name=".screen.splash.SplashScreenActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,11 +37,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".screen.authenticate.login.LoginActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".screen.authenticate.register.RegisterActivity"
+            android:name=".screen.search.SearchActivity"
             android:exported="false" />
 
         <meta-data
