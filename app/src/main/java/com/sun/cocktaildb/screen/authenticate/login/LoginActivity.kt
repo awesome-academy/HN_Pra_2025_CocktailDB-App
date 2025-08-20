@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.sun.cocktaildb.R
-import com.sun.cocktaildb.databinding.ActivityLognBinding
+import com.sun.cocktaildb.databinding.ActivityLoginBinding
 import com.sun.cocktaildb.screen.authenticate.register.RegisterActivity
 import com.sun.cocktaildb.screen.home.HomeScreenActivity
 import com.sun.cocktaildb.utils.base.BaseActivity
@@ -17,12 +17,12 @@ class LoginActivity :
     LoginContract.View {
     private lateinit var presenter: LoginPresenter
 
-    private var binding: ActivityLognBinding? = null
+    private var binding: ActivityLoginBinding? = null
 
     override fun initView() {
         presenter = LoginPresenter()
         presenter.setView(this)
-        binding = ActivityLognBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         initializeViews()
         setupClickListeners()
