@@ -9,8 +9,8 @@
     android:padding="@dimen/card_margin">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="@dimen/dp_85"
+        android:layout_height="@dimen/dp_85"
         app:cardCornerRadius="@dimen/category_corner_radius"
         app:cardElevation="@dimen/card_elevation"
         app:cardBackgroundColor="@color/white"
