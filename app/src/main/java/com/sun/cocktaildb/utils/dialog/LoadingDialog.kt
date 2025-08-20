@@ -9,6 +9,9 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.sun.cocktaildb.R
 
 class LoadingDialog(
@@ -53,7 +56,6 @@ class LoadingDialog(
                             dialog?.hide()
                         }
                     } catch (e: Exception) {
-                        // //LogVnp.Shape1(Shape1);
                     }
                 }
         }
@@ -62,16 +64,14 @@ class LoadingDialog(
     fun show() {
         dialog?.show()
 
-        // Ensure system UI stays hidden after dialog shows
         dialog?.window?.let { window ->
-            window.decorView.systemUiVisibility = (
-                View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            )
+            // Tell the window not to fit system windows
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+
+            val controller = WindowInsetsControllerCompat(window, window.decorView)
+            controller.hide(WindowInsetsCompat.Type.systemBars()) // Hide status + nav bar
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
         run?.let { handler.postDelayed(it, 90000) }
