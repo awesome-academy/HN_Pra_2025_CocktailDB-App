@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
-                    android:text="LOGIN"
+                    android:text="@string/login"
                     android:textColor="#000000"
                     android:textSize="28sp"
                     android:textStyle="bold" />
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="40dp"
-                    android:text="Sign in to your cocktail account"
+                    android:text="@string/sign_in_to_your_cocktail_account"
                     android:textColor="#666666"
                     android:textSize="14sp" />
 
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Email"
+                    android:text="@string/email"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -83,7 +83,7 @@
                     android:layout_height="48dp"
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/input_background"
-                    android:hint="Enter your email here"
+                    android:hint="@string/enter_your_email_here"
                     android:inputType="text"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Password"
+                    android:text="@string/password"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -107,7 +107,7 @@
                     android:layout_height="48dp"
                     android:layout_marginBottom="40dp"
                     android:background="@drawable/input_background"
-                    android:hint="Enter your password here"
+                    android:hint="@string/enter_your_password_here"
                     android:inputType="textPassword"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
@@ -139,7 +139,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Don't have an account? "
+                        android:text="@string/don_t_have_an_account"
                         android:textColor="#666666"
                         android:textSize="14sp" />
 
@@ -147,7 +147,7 @@
                         android:id="@+id/tv_signup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign up"
+                        android:text="@string/sign_up"
                         android:textColor="#FF6B35"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -156,19 +156,6 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <!-- Contact Information -->
-        <TextView
-            android:id="@+id/tv_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Contact: abcxyz@gmail.com"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
