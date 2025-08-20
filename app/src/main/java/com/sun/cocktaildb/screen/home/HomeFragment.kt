@@ -37,7 +37,7 @@ class HomeFragment :
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding?.root
     }
 
     override fun initView() {
@@ -56,7 +56,7 @@ class HomeFragment :
             CategoryAdapter { category ->
                 presenter.onCategoryClicked(category)
             }
-        binding!!.rvCategories.apply {
+        binding?.rvCategories.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
         }
@@ -71,7 +71,7 @@ class HomeFragment :
                     presenter.onFavoriteClicked(cocktail, isFavorite)
                 },
             )
-        binding!!.rvPopular.apply {
+        binding?.rvPopular.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = popularCocktailAdapter
         }
