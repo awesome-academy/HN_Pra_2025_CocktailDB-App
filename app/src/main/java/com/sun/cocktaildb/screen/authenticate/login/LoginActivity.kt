@@ -33,7 +33,9 @@ class LoginActivity :
 
     private fun setupClickListeners() {
         binding?.btnLogin?.setOnClickListener {
-            presenter.login()
+            if (validateInputs()) {
+                presenter.login()
+            }
         }
 
         binding?.tvSignup?.setOnClickListener {
@@ -93,5 +95,21 @@ class LoginActivity :
     override fun clearInputs() {
         binding?.etUsername?.text?.clear()
         binding?.etPassword?.text?.clear()
+    }
+
+    fun validateInputs(): Boolean {
+        val email = getEmail()
+        val password = getPassword() ?: ""
+
+        if (email.isEmpty()) {
+            showError("Email is required")
+            return false
+        }
+
+        if (password.isEmpty()) {
+            showError("Password is required")
+            return false
+        }
+        return true
     }
 }

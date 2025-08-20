@@ -1,7 +1,7 @@
 package com.sun.cocktaildb.screen.authenticate.login
 
 import com.sun.cocktaildb.data.repository.AuthRepository
-import com.sun.cocktaildb.data.repository.impl.FirebaseAuthImplement
+import com.sun.cocktaildb.data.repository.FirebaseAuthImplement
 
 class LoginPresenter(
     private val authRepository: AuthRepository = FirebaseAuthImplement(),
@@ -44,21 +44,5 @@ class LoginPresenter(
                 },
             )
         }
-    }
-
-    override fun validateInputs(): Boolean {
-        val email = view?.getEmail() ?: ""
-        val password = view?.getPassword() ?: ""
-
-        if (email.isEmpty()) {
-            view?.showError("Email is required")
-            return false
-        }
-
-        if (password.isEmpty()) {
-            view?.showError("Password is required")
-            return false
-        }
-        return true
     }
 }
