@@ -30,8 +30,8 @@
             <!-- Favorite Icon -->
             <ImageView
                 android:id="@+id/iv_favorite"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:layout_gravity="top|end"
                 android:layout_margin="@dimen/icon_margin"
                 android:background="@drawable/favorite_ripple"
