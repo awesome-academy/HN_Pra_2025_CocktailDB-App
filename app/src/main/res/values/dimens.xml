@@ -16,7 +16,7 @@
     <dimen name="dp_140">140dp</dimen>
     <dimen name="dp_150">150dp</dimen>
     <dimen name="dp_16">16dp</dimen>
-    
+    <dimen name="dp_85">85dp</dimen>
     <!-- Card dimensions -->
     <dimen name="card_margin">8dp</dimen>
     <dimen name="card_corner_radius">12dp</dimen>
