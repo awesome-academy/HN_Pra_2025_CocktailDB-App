@@ -15,7 +15,7 @@ interface LoginContract {
         fun clearInputs()
     }
 
-    interface Presenter : com.sun.cocktaildb.utils.base.BasePresenter<View> {
+    interface Presenter : BasePresenter<View> {
         fun login()
     }
 }
