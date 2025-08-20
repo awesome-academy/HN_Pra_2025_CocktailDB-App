@@ -99,7 +99,7 @@ class LoginActivity :
 
     fun validateInputs(): Boolean {
         val email = getEmail()
-        val password = getPassword() ?: ""
+        val password = getPassword()
 
         if (email.isEmpty()) {
             showError("Email is required")

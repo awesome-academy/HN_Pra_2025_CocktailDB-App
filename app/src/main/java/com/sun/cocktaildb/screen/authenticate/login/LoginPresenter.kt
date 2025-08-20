@@ -21,10 +21,6 @@ class LoginPresenter(
     }
 
     override fun login() {
-        if (!validateInputs()) {
-            return
-        }
-
         view?.showLoading()
 
         val email = view?.getEmail() ?: ""
@@ -44,21 +40,5 @@ class LoginPresenter(
                 },
             )
         }
-    }
-
-    override fun validateInputs(): Boolean {
-        val email = view?.getEmail() ?: ""
-        val password = view?.getPassword() ?: ""
-
-        if (email.isEmpty()) {
-            view?.showError("Email is required")
-            return false
-        }
-
-        if (password.isEmpty()) {
-            view?.showError("Password is required")
-            return false
-        }
-        return true
     }
 }
