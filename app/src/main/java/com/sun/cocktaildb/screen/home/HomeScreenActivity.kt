@@ -8,6 +8,8 @@ import com.sun.cocktaildb.screen.profile.ProfileFragment
 import com.sun.cocktaildb.screen.search.SearchFragment
 import com.sun.cocktaildb.utils.base.BaseActivity
 
+
+
 class HomeScreenActivity : BaseActivity() {
 
     private lateinit var binding: ActivityHomeScreenBinding

@@ -46,6 +46,10 @@
         <activity
             android:name=".screen.cocktaildetail.CocktailDetailActivity"
             android:exported="false" />
+      
+        <activity
+            android:name=".screen.favorite.FavoriteActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
