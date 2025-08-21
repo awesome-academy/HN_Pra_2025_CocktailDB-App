@@ -16,7 +16,7 @@ class FavoritesFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         return TextView(context).apply {
-            text = "Favorites Fragment - Triển khai sau"
+            text = getString(R.string.favorites_fragment_placeholder)
             textSize = 18f
             setTextColor(resources.getColor(R.color.black, null))
             gravity = android.view.Gravity.CENTER

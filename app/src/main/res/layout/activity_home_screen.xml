@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dp_40"
             android:fontFamily="@font/aclonica"
-            android:text="CocktailDB"
+            android:text="@string/cocktaildb"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold" />

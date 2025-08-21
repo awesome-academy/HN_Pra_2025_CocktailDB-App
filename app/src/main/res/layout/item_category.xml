@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/card_margin"
-        android:text="Sour"
+        tools:text="Category"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_category"
         android:textStyle="bold"

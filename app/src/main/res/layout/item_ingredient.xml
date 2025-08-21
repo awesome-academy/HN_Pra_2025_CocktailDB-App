@@ -12,17 +12,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Ingredient"
+        android:text="@string/ingredient"
         android:textColor="@color/black"
-        android:textSize="14sp" />
+        android:textSize="@dimen/sp_14" />
 
     <TextView
         android:id="@+id/tv_measure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
-        android:text="Measure"
+        android:text="@string/measure"
         android:textColor="@color/black"
-        android:textSize="14sp" />
+        android:textSize="@dimen/sp_14" />
 
 </LinearLayout>

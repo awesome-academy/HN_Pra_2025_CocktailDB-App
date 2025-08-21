@@ -121,7 +121,7 @@ class HomeFragment :
     override fun onCategoryClicked(category: Category) {
         val intent = CategoryDetailActivity.newIntent(requireContext(), category)
         startActivity(intent)
-        Toast.makeText(context, "Navigate to CategoryScreen for: ${category.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.navigate_to_category_screen, category.name), Toast.LENGTH_SHORT).show()
     }
 
     override fun onCocktailClicked(cocktail: Cocktail) {
