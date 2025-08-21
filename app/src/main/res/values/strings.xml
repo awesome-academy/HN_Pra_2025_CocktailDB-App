@@ -12,6 +12,10 @@
     <string name="removed_from_favorites">%1$s đã được xóa khỏi danh sách yêu thích!</string>
     <string name="navigate_to_detail_screen">Navigate to detail screen for: %1$s</string>
     <string name="favorite_icon">Icon yêu thích</string>
+
+    <string name="favorite_empty_title">Your favorite is empty</string>
+    <string name="favorite_empty_subtitle">Please add at least one item here</string>
+
     <string name="no_result_found">No result found</string>
     <string name="cocktaildb">CocktailDB</string>
     <string name="sign_in_to_your_cocktail_account">Sign in to your cocktail account</string>
@@ -47,7 +51,7 @@
     <string name="categories_title">Categories</string>
     <string name="popular_title">Popular</string>
     <string name="measure">Measure</string>
-    <string name="team_signature">'@Team7'</string>
+    <string name="team_signature">Team7</string>
     <string name="cocktails_title">Cocktails</string>
     <string name="navigate_to_category_screen">Navigate to CategoryScreen for: %1$s</string>
     <string name="login_successful">Login successful!</string>
@@ -60,4 +64,5 @@
     <string name="search_hint_ingredient">Type to search by ingredient (e.g., vodka, gin, lime)</string>
     <string name="favorites_fragment_placeholder">Favorites Fragment - Triển khai sau</string>
     <string name="profile_fragment_placeholder">Profile Fragment - Triển khai sau</string>
+
 </resources>
