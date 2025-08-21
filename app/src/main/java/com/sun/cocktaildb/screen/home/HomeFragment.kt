@@ -78,7 +78,11 @@ class HomeFragment :
 
     override fun onResume() {
         super.onResume()
-        presenter.onStart()
+        if (!::categoryAdapter.isInitialized || categoryAdapter.itemCount == 0 ||
+            !::popularCocktailAdapter.isInitialized || popularCocktailAdapter.itemCount == 0
+        ) {
+            presenter.onStart()
+        }
     }
 
     override fun onPause() {

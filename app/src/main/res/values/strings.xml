@@ -30,4 +30,14 @@
     <string name="re_enter_your_password_here">Re-enter your password here</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="log_in">Log in</string>
+    <string name="cocktail_image" />
+    <string name="back_button" />
+    <string name="cocktail_name">Cocktail Name</string>
+    <string name="category">Category</string>
+    <string name="alcoholic">Alcoholic</string>
+    <string name="name">Name</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="discription_detail">Instructions will be displayed here...</string>
+    <string name="no_data">Không có dữ liệu để hiển thị</string>
 </resources>
