@@ -38,33 +38,7 @@ class RegisterPresenter constructor(
         }
     }
 
-    override fun validateInputs(
-        email: String,
-        password: String,
-        confirmPassword: String,
-    ): Boolean {
-        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            view?.showEmailInvalid("Email is required")
-            view?.showPasswordInvalid("Password is required")
-            view?.showConfirmPasswordInvalid("Confirm password is required")
-            return false
-        }
-        if (!validateEmailPattern(email)) {
-            view?.showEmailInvalid("Invalid email format")
-            return false
-        }
-        if (password.length < 6) {
-            view?.showPasswordInvalid("Password must be at least 6 characters")
-            return false
-        }
-        if (password != confirmPassword) {
-            view?.showConfirmPasswordInvalid("Passwords do not match")
-            return false
-        }
-        return true
-    }
-
-    private fun validateEmailPattern(email: String): Boolean {
+    fun validateEmailPattern(email: String): Boolean {
         val emailPattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}"
         return email.matches(emailPattern.toRegex())
     }

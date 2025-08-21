@@ -21,11 +21,5 @@ interface RegisterContract {
             email: String,
             password: String,
         )
-
-        fun validateInputs(
-            email: String,
-            password: String,
-            confirmPassword: String,
-        ): Boolean
     }
 }
