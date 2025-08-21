@@ -3,7 +3,7 @@ package com.sun.cocktaildb.screen.home
 import androidx.fragment.app.Fragment
 import com.sun.cocktaildb.R
 import com.sun.cocktaildb.databinding.ActivityHomeScreenBinding
-import com.sun.cocktaildb.screen.favorites.FavoritesFragment
+import com.sun.cocktaildb.screen.favorite.FavoriteFragment
 import com.sun.cocktaildb.screen.profile.ProfileFragment
 import com.sun.cocktaildb.screen.search.SearchFragment
 import com.sun.cocktaildb.utils.base.BaseActivity
@@ -15,7 +15,7 @@ class HomeScreenActivity : BaseActivity() {
     private lateinit var binding: ActivityHomeScreenBinding
 
     private val homeFragment by lazy { HomeFragment() }
-    private val favoritesFragment by lazy { FavoritesFragment() }
+    private val favoritesFragment by lazy { FavoriteFragment() }
     private val searchFragment by lazy { SearchFragment() }
     private val profileFragment by lazy { ProfileFragment() }
     private var activeFragment: Fragment? = null

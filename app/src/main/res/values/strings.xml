@@ -64,5 +64,8 @@
     <string name="search_hint_ingredient">Type to search by ingredient (e.g., vodka, gin, lime)</string>
     <string name="favorites_fragment_placeholder">Favorites Fragment - Triển khai sau</string>
     <string name="profile_fragment_placeholder">Profile Fragment - Triển khai sau</string>
+    <string name="cocktail_name_placeholder">Cocktail name</string>
+    <string name="ingredient_list_placeholder">1/2 oz contour\n1/2 oz contour\n1/2 oz contour</string>
+    <string name="category_placeholder">Category</string>
 
 </resources>

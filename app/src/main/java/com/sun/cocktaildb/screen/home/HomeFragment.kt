@@ -97,12 +97,10 @@ class HomeFragment :
     // HomeView implementations
     override fun showCategories(categories: List<Category>) {
         categoryAdapter.updateCategories(categories)
-        println("DEBUG: Loaded ${categories.size} categories")
     }
 
     override fun showPopularCocktails(cocktails: List<Cocktail>) {
         popularCocktailAdapter.updateCocktails(cocktails)
-        println("DEBUG: Loaded ${cocktails.size} popular cocktails")
     }
 
     override fun showLoading() {
@@ -115,7 +113,6 @@ class HomeFragment :
 
     override fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-        println("DEBUG: Error: $message")
     }
 
     override fun onCategoryClicked(category: Category) {
