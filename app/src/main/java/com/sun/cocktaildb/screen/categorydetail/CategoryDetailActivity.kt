@@ -4,13 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sun.cocktaildb.R
 import com.sun.cocktaildb.data.model.Category
 import com.sun.cocktaildb.data.model.Cocktail
 import com.sun.cocktaildb.data.repository.impl.CocktailRepositoryImpl
 import com.sun.cocktaildb.databinding.ActivityCategoryDetailBinding
-import com.sun.cocktaildb.screen.cocktaildetail.CocktailDetailActivity
+import com.sun.cocktaildb.screen.cocktaildetail.CocktailActivity
 import com.sun.cocktaildb.screen.home.adapter.PopularCocktailAdapter
 import com.sun.cocktaildb.utils.FavoriteManager
 import com.sun.cocktaildb.utils.base.BaseActivity
@@ -110,8 +111,7 @@ class CategoryDetailActivity :
     }
 
     override fun onCocktailClicked(cocktail: Cocktail) {
-        val intent = CocktailDetailActivity.newIntent(this, cocktail.id)
-        startActivity(intent)
+        val intent = CocktailActivity.newIntent(this, cocktail.id)
     }
 
     override fun onFavoriteClicked(
@@ -126,6 +126,13 @@ class CategoryDetailActivity :
 
         // Update the cocktail favorite status in the adapter
         cocktailAdapter.updateCocktailFavoriteStatus(cocktail.id, isFavorite)
+
+        // Update favorite status in FavoriteManager
+        if (isFavorite) {
+            FavoriteManager.addToFavorites(cocktail)
+        } else {
+            FavoriteManager.removeFromFavorites(cocktail)
+        }
     }
 
     override fun navigateBack() {

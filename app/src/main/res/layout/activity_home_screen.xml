@@ -11,7 +11,7 @@
         android:layout_height="@dimen/dp_140"
         android:background="@drawable/header_background_img"
         android:orientation="vertical"
-        android:padding="@dimen/dp_12"
+        android:paddingVertical="@dimen/dp_12"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView

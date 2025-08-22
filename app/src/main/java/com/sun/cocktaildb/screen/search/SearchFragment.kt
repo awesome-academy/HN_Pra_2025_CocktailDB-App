@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.sun.cocktaildb.R
 import com.sun.cocktaildb.databinding.FragmentSearchBinding
+import com.sun.cocktaildb.screen.cocktaildetail.CocktailActivity
 import com.sun.cocktaildb.screen.search.adapter.HistoryAdapter
 import com.sun.cocktaildb.screen.search.adapter.SearchAdapter
 import com.sun.cocktaildb.utils.base.BaseFragment
