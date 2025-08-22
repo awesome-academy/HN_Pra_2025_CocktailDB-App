@@ -15,8 +15,7 @@
         app:cardElevation="@dimen/card_elevation"
         app:cardBackgroundColor="@color/white"
         app:strokeWidth="@dimen/category_stroke_width"
-        app:strokeColor="@color/black"
-        app:cardUseCompatPadding="true">
+        app:strokeColor="@color/black">
 
         <ImageView
             android:id="@+id/iv_category"

@@ -122,8 +122,8 @@ class HomeFragment :
     }
 
     override fun onCocktailClicked(cocktail: Cocktail) {
-        Toast.makeText(context, getString(R.string.navigate_to_detail_screen, cocktail.name), Toast.LENGTH_SHORT).show()
-        // TODO: Navigate to detail screen later
+        val intent = CocktailActivity.newIntent(requireContext(), cocktail.id)
+        startActivity(intent)
     }
 
     override fun onFavoriteClicked(
@@ -138,13 +138,6 @@ class HomeFragment :
 
         // Update the cocktail favorite status in the adapter
         popularCocktailAdapter.updateCocktailFavoriteStatus(cocktail.id, isFavorite)
-
-        // Update favorite status in FavoriteManager
-        if (isFavorite) {
-            FavoriteManager.addToFavorites(cocktail)
-        } else {
-            FavoriteManager.removeFromFavorites(cocktail)
-        }
 
         // Update favorites count in bottom navigation if available
         updateFavoritesCount()
