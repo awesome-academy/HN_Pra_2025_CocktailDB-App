@@ -53,23 +53,18 @@ class HomePresenter(
         executor.execute {
             try {
                 val cocktails = cocktailRepository.getPopularCocktails()
-                cocktailRepository.getFavouriteCocktails { result ->
-                    val updatedCocktails =
-                        if (result.isSuccess) {
-                            val favIds = result.getOrNull().orEmpty().map { it.id }.toSet()
-                            cocktails.map { it.copy(isFavorite = favIds.contains(it.id)) }
-                        } else {
-                            cocktails
-                        }
-
-                    mainHandler.post {
-                        if (updatedCocktails.isNotEmpty()) {
-                            view?.showPopularCocktails(updatedCocktails)
-                        } else {
-                            view?.showError("No popular cocktails found. Please check your internet connection.")
-                        }
-                        view?.hideLoading()
+                // Update favorite status based on FavoriteManager
+                val updatedCocktails =
+                    cocktails.map { cocktail ->
+                        cocktail.copy(isFavorite = FavoriteManager.isFavorite(cocktail.id))
                     }
+                mainHandler.post {
+                    if (updatedCocktails.isNotEmpty()) {
+                        view?.showPopularCocktails(updatedCocktails)
+                    } else {
+                        view?.showError("No popular cocktails found. Please check your internet connection.")
+                    }
+                    view?.hideLoading()
                 }
             } catch (e: Exception) {
                 mainHandler.post {
@@ -92,22 +87,7 @@ class HomePresenter(
         cocktail: Cocktail,
         isFavorite: Boolean,
     ) {
-        executor.execute {
-            try {
-                if (isFavorite) {
-                    cocktailRepository.addFavourite(cocktail.id)
-                } else {
-                    cocktailRepository.removeFavourite(cocktail.id)
-                }
-                
-                // Refresh popular cocktails to show updated favorite status
-                loadPopularCocktails()
-            } catch (e: Exception) {
-                mainHandler.post {
-                    view?.showError("Error updating favorite: ${e.message ?: "Unknown error"}")
-                }
-            }
-        }
+        view?.onFavoriteClicked(cocktail, isFavorite)
     }
 
     fun onBottomNavigationItemSelected(itemId: Int) {
