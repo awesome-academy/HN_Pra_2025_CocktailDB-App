@@ -48,7 +48,12 @@ class CocktailRepositoryImpl : CocktailRepository {
             }
             return result
         } catch (e: Exception) {
-            return emptyList()
+            return listOf(
+                Category("1", "Cocktails", "Classic cocktails", "https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg"),
+                Category("2", "Beer", "Various beer types", "https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg"),
+                Category("3", "Wine", "Red and white wines", "https://www.thecocktaildb.com/images/media/drink/71t8581504353095.jpg"),
+                Category("4", "Spirits", "Premium spirits", "https://www.thecocktaildb.com/images/media/drink/4qxyty1434360738.jpg"),
+            )
         }
     }
 

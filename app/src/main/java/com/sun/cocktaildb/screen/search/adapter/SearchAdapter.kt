@@ -50,11 +50,11 @@ class SearchAdapter(
         fun bind(cocktail: Cocktail) {
             binding.apply {
                 tvCocktailName.text = cocktail.name
-                
+
                 // Display ingredients in the format shown in the image
                 val ingredientsText = getIngredientsText(cocktail)
                 tvCocktailDescription.text = ingredientsText
-                
+
                 // Load image using ImageLoader utility
                 val imageUrl = cocktail.imageUrl
                 if (imageUrl.isNotEmpty() && imageUrl != "https://example.com/placeholder.jpg") {
@@ -64,10 +64,10 @@ class SearchAdapter(
                 }
             }
         }
-        
+
         // Extract complex logic into separate method for better readability and testability
         private fun getIngredientsText(cocktail: Cocktail): String {
-            return if (cocktail.ingredients.isNotEmpty() && 
+            return if (cocktail.ingredients.isNotEmpty() &&
                 cocktail.ingredients.first() != "Ingredients not available") {
                 // Show first ingredient with its measure if available
                 val firstIngredient = cocktail.ingredients.first()

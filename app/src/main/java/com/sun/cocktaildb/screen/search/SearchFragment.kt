@@ -8,11 +8,11 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
+import com.sun.cocktaildb.R
 import com.sun.cocktaildb.utils.base.BaseFragment
 import com.sun.cocktaildb.databinding.FragmentSearchBinding
 import com.sun.cocktaildb.screen.search.adapter.SearchAdapter
 import com.sun.cocktaildb.screen.search.adapter.HistoryAdapter
-import com.sun.cocktaildb.screen.cocktaildetail.CocktailActivity
 
 class SearchFragment : BaseFragment() {
     
@@ -43,8 +43,7 @@ class SearchFragment : BaseFragment() {
     
     private fun setupSearchAdapter() {
         searchAdapter = SearchAdapter { cocktail ->
-            val intent = CocktailActivity.newIntent(requireContext(), cocktail.id)
-            startActivity(intent)
+            Toast.makeText(context, getString(R.string.clicked_item, cocktail.name), Toast.LENGTH_SHORT).show()
         }
         
         binding.rvSearchResults.apply {
@@ -79,7 +78,7 @@ class SearchFragment : BaseFragment() {
                 binding.llNoResults.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
                 searchAdapter.updateCocktails(cocktails)
-                Toast.makeText(context, "Found ${cocktails.size} cocktails", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.found_n_cocktails, cocktails.size), Toast.LENGTH_SHORT).show()
             },
             onNoResults = {
                 binding.rvSearchHistory.visibility = View.GONE
@@ -124,14 +123,14 @@ class SearchFragment : BaseFragment() {
                 when (tab?.position) {
                     0 -> {
                         searchFragmentManager.setSearchType(SearchType.NAME)
-                        binding.etSearch.hint = "Type to search cocktails (e.g., Margarita, Mojito)"
+                        binding.etSearch.hint = getString(R.string.search_hint_name)
                         showAlcoholicFilterOnly()
                         searchFragmentManager.clearSearchResults()
                         showSearchHistory()
                     }
                     1 -> {
                         searchFragmentManager.setSearchType(SearchType.INGREDIENT)
-                        binding.etSearch.hint = "Type to search by ingredient (e.g., vodka, gin, lime)"
+                        binding.etSearch.hint = getString(R.string.search_hint_ingredient)
                         showIngredientFilterOnly()
                         searchFragmentManager.clearSearchResults()
                         showSearchHistory()

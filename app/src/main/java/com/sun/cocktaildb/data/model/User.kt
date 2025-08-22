@@ -13,8 +13,8 @@ data class User(
     val email: String = "",
     val phoneNumber: String = "",
     val createdAt: Long = System.currentTimeMillis(),
-    val updatedAt: Long = System.currentTimeMillis()
+    val updatedAt: Long = System.currentTimeMillis(),
 ) {
     // Empty constructor required for Firestore
     constructor() : this("", "", "", "", 0L, 0L)
-} 
+}

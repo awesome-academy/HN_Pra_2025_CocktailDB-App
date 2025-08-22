@@ -1,5 +1,6 @@
 package com.sun.cocktaildb.screen.authenticate.login
 
+import com.sun.cocktaildb.utils.base.BasePresenter
 import com.sun.cocktaildb.utils.base.BaseView
 
 interface LoginContract {
@@ -15,9 +16,7 @@ interface LoginContract {
         fun clearInputs()
     }
 
-    interface Presenter : com.sun.cocktaildb.utils.base.BasePresenter<View> {
+    interface Presenter : BasePresenter<View> {
         fun login()
-
-        fun validateInputs(): Boolean
     }
-} 
+}

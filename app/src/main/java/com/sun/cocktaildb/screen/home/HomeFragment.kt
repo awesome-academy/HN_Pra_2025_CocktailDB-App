@@ -13,7 +13,6 @@ import com.sun.cocktaildb.data.model.Cocktail
 import com.sun.cocktaildb.data.repository.impl.CocktailRepositoryImpl
 import com.sun.cocktaildb.databinding.FragmentHomeBinding
 import com.sun.cocktaildb.screen.categorydetail.CategoryDetailActivity
-import com.sun.cocktaildb.screen.cocktaildetail.CocktailActivity
 import com.sun.cocktaildb.screen.home.adapter.CategoryAdapter
 import com.sun.cocktaildb.screen.home.adapter.PopularCocktailAdapter
 import com.sun.cocktaildb.utils.FavoriteManager
@@ -23,7 +22,9 @@ import com.sun.cocktaildb.utils.dialog.LoadingDialog
 class HomeFragment :
     BaseFragment(),
     HomeView {
-    private var binding: FragmentHomeBinding? = null
+    private val binding: FragmentHomeBinding by lazy {
+        FragmentHomeBinding.inflate(layoutInflater)
+    }
     private lateinit var presenter: HomePresenter
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var popularCocktailAdapter: PopularCocktailAdapter
@@ -36,10 +37,7 @@ class HomeFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding!!.root
-    }
+    ): View = binding.root
 
     override fun initView() {
         setupPresenter()
@@ -57,7 +55,7 @@ class HomeFragment :
             CategoryAdapter { category ->
                 presenter.onCategoryClicked(category)
             }
-        binding!!.rvCategories.apply {
+        binding.rvCategories.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
         }
@@ -72,7 +70,7 @@ class HomeFragment :
                     presenter.onFavoriteClicked(cocktail, isFavorite)
                 },
             )
-        binding!!.rvPopular.apply {
+        binding.rvPopular.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = popularCocktailAdapter
         }
@@ -80,7 +78,11 @@ class HomeFragment :
 
     override fun onResume() {
         super.onResume()
-        presenter.onStart()
+        if (!::categoryAdapter.isInitialized || categoryAdapter.itemCount == 0 ||
+            !::popularCocktailAdapter.isInitialized || popularCocktailAdapter.itemCount == 0
+        ) {
+            presenter.onStart()
+        }
     }
 
     override fun onPause() {
@@ -90,18 +92,15 @@ class HomeFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
     }
 
     // HomeView implementations
     override fun showCategories(categories: List<Category>) {
         categoryAdapter.updateCategories(categories)
-        println("DEBUG: Loaded ${categories.size} categories")
     }
 
     override fun showPopularCocktails(cocktails: List<Cocktail>) {
         popularCocktailAdapter.updateCocktails(cocktails)
-        println("DEBUG: Loaded ${cocktails.size} popular cocktails")
     }
 
     override fun showLoading() {
@@ -114,18 +113,17 @@ class HomeFragment :
 
     override fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-        println("DEBUG: Error: $message")
     }
 
     override fun onCategoryClicked(category: Category) {
         val intent = CategoryDetailActivity.newIntent(requireContext(), category)
         startActivity(intent)
-        Toast.makeText(context, "Navigate to CategoryScreen for: ${category.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.navigate_to_category_screen, category.name), Toast.LENGTH_SHORT).show()
     }
 
     override fun onCocktailClicked(cocktail: Cocktail) {
-        val intent = CocktailActivity.newIntent(requireContext(), cocktail.id)
-        startActivity(intent)
+        Toast.makeText(context, getString(R.string.navigate_to_detail_screen, cocktail.name), Toast.LENGTH_SHORT).show()
+        // TODO: Navigate to detail screen later
     }
 
     override fun onFavoriteClicked(

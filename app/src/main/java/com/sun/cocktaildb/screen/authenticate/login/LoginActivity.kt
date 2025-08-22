@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.sun.cocktaildb.R
-import com.sun.cocktaildb.databinding.ActivityLognBinding
+import com.sun.cocktaildb.databinding.ActivityLoginBinding
 import com.sun.cocktaildb.screen.authenticate.register.RegisterActivity
 import com.sun.cocktaildb.screen.home.HomeScreenActivity
 import com.sun.cocktaildb.utils.base.BaseActivity
@@ -17,12 +17,12 @@ class LoginActivity :
     LoginContract.View {
     private lateinit var presenter: LoginPresenter
 
-    private var binding: ActivityLognBinding? = null
+    private var binding: ActivityLoginBinding? = null
 
     override fun initView() {
         presenter = LoginPresenter()
         presenter.setView(this)
-        binding = ActivityLognBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         initializeViews()
         setupClickListeners()
@@ -33,7 +33,9 @@ class LoginActivity :
 
     private fun setupClickListeners() {
         binding?.btnLogin?.setOnClickListener {
-            presenter.login()
+            if (validateInputs()) {
+                presenter.login()
+            }
         }
 
         binding?.tvSignup?.setOnClickListener {
@@ -59,7 +61,7 @@ class LoginActivity :
 
     override fun showLoading() {
         binding?.btnLogin?.isEnabled = false
-        binding?.btnLogin?.text = "Logging in..."
+        binding?.btnLogin?.text = getString(R.string.logging_in)
     }
 
     override fun hideLoading() {
@@ -72,7 +74,7 @@ class LoginActivity :
     }
 
     override fun showSuccess() {
-        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
     }
 
     override fun navigateToMain() {
@@ -93,5 +95,21 @@ class LoginActivity :
     override fun clearInputs() {
         binding?.etUsername?.text?.clear()
         binding?.etPassword?.text?.clear()
+    }
+
+    fun validateInputs(): Boolean {
+        val email = getEmail()
+        val password = getPassword()
+
+        if (email.isEmpty()) {
+            showError(getString(R.string.email_required))
+            return false
+        }
+
+        if (password.isEmpty()) {
+            showError(getString(R.string.password_required))
+            return false
+        }
+        return true
     }
 }
