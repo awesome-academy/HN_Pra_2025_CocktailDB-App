@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sun.cocktaildb.databinding.ItemIngredientBinding
+import com.sun.cocktaildb.databinding.ItemIngredientsBinding
 
 class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder>() {
-
     private var ingredients: List<String> = emptyList()
 
     fun updateIngredients(newIngredients: List<String>) {
@@ -14,25 +14,31 @@ class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.IngredientVie
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
-        val binding = ItemIngredientBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): IngredientViewHolder {
+        val binding =
+            ItemIngredientsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
         return IngredientViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: IngredientViewHolder,
+        position: Int,
+    ) {
         holder.bind(ingredients[position])
     }
 
     override fun getItemCount(): Int = ingredients.size
 
     inner class IngredientViewHolder(
-        private val binding: ItemIngredientBinding
+        private val binding: ItemIngredientsBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(ingredient: String) {
             binding.apply {
                 // Split ingredient into name and measure if possible

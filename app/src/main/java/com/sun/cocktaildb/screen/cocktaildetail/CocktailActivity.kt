@@ -207,15 +207,10 @@ class CocktailActivity :
             Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "text/plain"
-                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject, cocktail.name))
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject))
                 putExtra(
                     Intent.EXTRA_TEXT,
-                    getString(
-                        R.string.share_text,
-                        cocktail.name,
-                        cocktail.ingredients.joinToString(", "),
-                        cocktail.instructions,
-                    ),
+                    cocktail.name,
                 )
             }
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_via)))

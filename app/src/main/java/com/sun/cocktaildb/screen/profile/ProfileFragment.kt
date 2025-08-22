@@ -16,6 +16,7 @@ import com.sun.cocktaildb.data.repository.AuthRepository
 import com.sun.cocktaildb.data.repository.UserRepository
 import com.sun.cocktaildb.data.repository.impl.FirebaseAuthImplement
 import com.sun.cocktaildb.data.repository.impl.UserRepositoryImpl
+import com.sun.cocktaildb.databinding.FragmentProfileBinding
 import com.sun.cocktaildb.screen.authenticate.login.LoginActivity
 import com.sun.cocktaildb.utils.base.BaseFragment
 import com.sun.cocktaildb.utils.dialog.LoadingDialog
@@ -27,24 +28,21 @@ import com.sun.cocktaildb.utils.dialog.LoadingDialog
 class ProfileFragment :
     BaseFragment(),
     ProfileView {
-    // UI Components
-    private lateinit var etName: EditText
-    private lateinit var etEmail: EditText
-    private lateinit var etPhone: EditText
-    private lateinit var tvEditProfile: TextView
-    private lateinit var btnLogout: Button
-
     // Presenter and dependencies
     private lateinit var presenter: ProfilePresenter
     private lateinit var authRepository: AuthRepository
     private lateinit var userRepository: UserRepository
     private lateinit var loadingDialog: LoadingDialog
 
+    private val binding by lazy {
+        FragmentProfileBinding.inflate(layoutInflater)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View = inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View = binding.root
 
     override fun initView() {
         // Initialize dependencies
@@ -65,31 +63,20 @@ class ProfileFragment :
      * Initialize UI components
      */
     private fun initializeViews() {
-        view?.let { view ->
-            etName = view.findViewById(R.id.et_name)
-            etEmail = view.findViewById(R.id.et_email)
-            etPhone = view.findViewById(R.id.et_phone)
-            tvEditProfile = view.findViewById(R.id.tv_edit_profile)
-            btnLogout = view.findViewById(R.id.btn_logout)
-        }
-
         loadingDialog = LoadingDialog(requireContext())
     }
 
-    /**
-     * Setup click listeners for interactive elements
-     */
     private fun setupClickListeners() {
-        tvEditProfile.setOnClickListener {
+        binding.tvEditProfile.setOnClickListener {
             presenter.toggleEditMode()
         }
 
-        btnLogout.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
             presenter.logout()
         }
 
         // Add text change listeners to update presenter when fields change
-        etName.addTextChangedListener(
+        binding.etName.addTextChangedListener(
             object : android.text.TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -109,14 +96,14 @@ class ProfileFragment :
                     if (presenter.isInEditMode()) {
                         presenter.updateProfileFields(
                             s.toString(),
-                            etPhone.text.toString(),
+                            binding.etPhone.text.toString(),
                         )
                     }
                 }
             },
         )
 
-        etPhone.addTextChangedListener(
+        binding.etPhone.addTextChangedListener(
             object : android.text.TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -135,7 +122,7 @@ class ProfileFragment :
                 override fun afterTextChanged(s: android.text.Editable?) {
                     if (presenter.isInEditMode()) {
                         presenter.updateProfileFields(
-                            etName.text.toString(),
+                            binding.etName.text.toString(),
                             s.toString(),
                         )
                     }
@@ -146,22 +133,22 @@ class ProfileFragment :
 
     override fun displayUserProfile(user: User) {
         // Display user information in UI fields
-        etName.setText(user.name)
-        etEmail.setText(user.email)
-        etPhone.setText(user.phoneNumber)
+        binding.etName.setText(user.name)
+        binding.etEmail.setText(user.email)
+        binding.etPhone.setText(user.phoneNumber)
     }
 
     override fun setEditMode(isEditMode: Boolean) {
         // Enable/disable editing of profile fields
-        etName.isEnabled = isEditMode
-        etPhone.isEnabled = isEditMode
+        binding.etName.isEnabled = isEditMode
+        binding.etPhone.isEnabled = isEditMode
 
         // Update edit profile text
-        tvEditProfile.text = if (isEditMode) getString(R.string.save) else getString(R.string.edit_profile)
+        binding.tvEditProfile.text = if (isEditMode) getString(R.string.save) else getString(R.string.edit_profile)
 
         // Show visual feedback
         if (isEditMode) {
-            etName.requestFocus()
+            binding.etName.requestFocus()
         }
     }
 
