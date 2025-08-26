@@ -31,6 +31,8 @@ class CocktailPresenter(
 
     fun onDestroy() {
         view = null
+        // Cleanup executor to prevent memory leaks
+        executor.shutdown()
     }
 
     override fun loadCocktailDetail(cocktailId: String) {
@@ -57,20 +59,36 @@ class CocktailPresenter(
         }
     }
 
+    // MERGED: Combined both versions of checkFavoriteStatus for maximum functionality
     private fun checkFavoriteStatus(cocktailId: String) {
+        // Use FavoriteSyncManager for immediate status check (from HEAD)
+        val isFavorite = FavoriteSyncManager.isFavorite(cocktailId)
+        mainHandler.post {
+            view?.updateFavoriteButton(isFavorite)
+        }
+        
+        // Also sync with Firebase in background (from HEAD)
         executor.execute {
             try {
                 repository.getFavouriteCocktails { result ->
                     if (result.isSuccess) {
                         val favoriteIds = result.getOrNull()?.map { it.id } ?: emptyList()
-                        val isFavorite = favoriteIds.contains(cocktailId)
-                        if (isFavorite && currentCocktail != null) {
-                            FavoriteManager.addToFavorites(currentCocktail!!)
-                        }
-                        mainHandler.post {
-                            view?.updateFavoriteButton(isFavorite)
+                        val firebaseFavorite = favoriteIds.contains(cocktailId)
+                        
+                        // Update local manager if there's a difference
+                        val cocktail = currentCocktail
+                        if (firebaseFavorite != isFavorite && cocktail != null) {
+                            if (firebaseFavorite) {
+                                FavoriteManager.addToFavorites(cocktail)
+                            } else {
+                                FavoriteManager.removeFromFavorites(cocktail)
+                            }
+                            mainHandler.post {
+                                view?.updateFavoriteButton(firebaseFavorite)
+                            }
                         }
                     } else {
+                        // Fallback to local FavoriteManager if Firebase fails (from upstream)
                         val isFavorite = FavoriteSyncManager.isFavorite(cocktailId)
                         mainHandler.post {
                             view?.updateFavoriteButton(isFavorite)
@@ -78,6 +96,7 @@ class CocktailPresenter(
                     }
                 }
             } catch (e: Exception) {
+                // Firebase check failed, but we already have local status
                 val isFavorite = FavoriteSyncManager.isFavorite(cocktailId)
                 mainHandler.post {
                     view?.updateFavoriteButton(isFavorite)
@@ -85,7 +104,6 @@ class CocktailPresenter(
             }
         }
     }
-
     override fun toggleFavorite(cocktail: Cocktail) {
         val isFavorite = FavoriteSyncManager.isFavorite(cocktail.id)
         val newFavoriteStatus = !isFavorite

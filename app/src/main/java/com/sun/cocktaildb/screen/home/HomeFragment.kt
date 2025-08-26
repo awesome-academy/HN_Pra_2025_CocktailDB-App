@@ -106,18 +106,21 @@ class HomeFragment :
     }
 
     override fun onFavoritesRefreshed() {
-        // Refresh all popular cocktails with current favorite status
-        refreshPopularCocktailsFromOtherScreens()
+        // Force refresh all popular cocktails with current favorite status
+        popularCocktailAdapter.refreshAllFavoriteStatus()
     }
 
     private fun refreshPopularCocktailsFromOtherScreens() {
         // Get current popular cocktails and update their favorite status
         val currentCocktails = popularCocktailAdapter.getCurrentCocktails()
         if (currentCocktails.isNotEmpty()) {
-            // Update favorite status for each cocktail based on FavoriteManager
+            // Update favorite status for each cocktail based on FavoriteSyncManager
             currentCocktails.forEach { cocktail ->
                 val isFavorite = FavoriteSyncManager.isFavorite(cocktail.id)
-                popularCocktailAdapter.updateCocktailFavoriteStatus(cocktail.id, isFavorite)
+                // Only update if the status is different to avoid unnecessary UI updates
+                if (cocktail.isFavorite != isFavorite) {
+                    popularCocktailAdapter.updateCocktailFavoriteStatus(cocktail.id, isFavorite)
+                }
             }
         }
     }

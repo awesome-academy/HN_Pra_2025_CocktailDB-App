@@ -40,6 +40,11 @@ class PopularCocktailAdapter(
     fun refreshFavorites() {
         notifyDataSetChanged()
     }
+    
+    fun refreshAllFavoriteStatus() {
+        // Force refresh all items to ensure favorite status is correct
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -75,7 +80,7 @@ class PopularCocktailAdapter(
 
             // Load image using Android native ImageLoader utility
             val imageUrl = cocktail.imageUrl
-                            if (imageUrl.isNotEmpty() && imageUrl != Constants.PLACEHOLDER_IMAGE_URL) {
+            if (imageUrl.isNotEmpty() && imageUrl != Constants.PLACEHOLDER_IMAGE_URL) {
                 ImageLoader.loadImage(ivCocktail, imageUrl, R.drawable.placeholder)
             } else {
                 ivCocktail.setImageResource(R.drawable.placeholder)
@@ -91,6 +96,7 @@ class PopularCocktailAdapter(
                 val animation = AnimationUtils.loadAnimation(itemView.context, R.anim.favorite_scale)
                 ivFavorite.startAnimation(animation)
                 
+                // Toggle favorite status
                 val newFavoriteStatus = !cocktail.isFavorite
                 onFavoriteClickListener(cocktail, newFavoriteStatus)
             }
@@ -99,8 +105,10 @@ class PopularCocktailAdapter(
         private fun updateFavoriteIcon(isFavorite: Boolean) {
             if (isFavorite) {
                 ivFavorite.setImageResource(R.drawable.ic_favorite_filled_black_24dp)
+                ivFavorite.setColorFilter(itemView.context.getColor(R.color.colorPrimary))
             } else {
                 ivFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+                ivFavorite.clearColorFilter()
             }
         }
     }

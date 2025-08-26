@@ -94,28 +94,9 @@ class HomePresenter(
         cocktail: Cocktail,
         isFavorite: Boolean,
     ) {
-
         // Use FavoriteSyncManager to handle all favorite operations
         // This will automatically update Firebase and notify all screens
         FavoriteSyncManager.updateFavorite(cocktail, isFavorite)
-
-        executor.execute {
-            try {
-                if (isFavorite) {
-                    cocktailRepository.addFavourite(cocktail.id)
-                } else {
-                    cocktailRepository.removeFavourite(cocktail.id)
-                }
-                
-                // Refresh popular cocktails to show updated favorite status
-                loadPopularCocktails()
-            } catch (e: Exception) {
-                mainHandler.post {
-                    view?.showError("${Constants.ERROR_UPDATING_FAVORITE}: ${e.message ?: Constants.UNKNOWN_ERROR}")
-                }
-            }
-        }
-
     }
 
     fun onBottomNavigationItemSelected(itemId: Int) {

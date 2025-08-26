@@ -36,4 +36,11 @@ class FavoritePresenter(
             }
         }
     }
+
+    // MERGED: Keep advanced functionality from HEAD for better UX
+    fun removeFromFavorites(cocktailId: String) {
+        repository.removeFavourite(cocktailId)
+        // Refresh the favorites list after removal
+        loadFavorites()
+    }
 }
